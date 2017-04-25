@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Ninja Gold</title>
+  {% load staticfiles %}
+  <link rel="stylesheet" href="{% static 'ninjagold/css/ninjagold.css' %}">
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</head>
+<body>
+  <div class="col-sm-6 col-sm-offset-3 well">
+    <header>
+      <h1>Ninja Gold</h1>
+    </header>
+    <h3>Your Gold: <span>{{ request.session.total_gold }}</span></h3>
+    <form class="" action="{% url 'ninjagold:delete' %}" method="post">
+      {% csrf_token %}
+      <input type="submit" name="" value="Play Again">
+    </form>
+    <div class="location">
+      <h3>Farm</h3>
+      <p>(earn 10-20 gold)</p>
+      <form action="{% url 'ninjagold:process_money' %}" method="post">
+        <input type="hidden" name="location" value="farm">
+        <input type="submit" value="Find Gold!">
+        {% csrf_token %}
+      </form>
+    </div>
+    <div class="location">
+      <h3>Cave</h3>
+      <p>(earn 5-10 gold)</p>
+      <form action="{% url 'ninjagold:process_money' %}" method="post">
+        <input type="hidden" name="location" value="cave">
+        <input type="submit" value="Find Gold!">
+        {% csrf_token %}
+      </form>
+    </div>
+    <div class="location">
+      <h3>House</h3>
+      <p>(earn 2-5 gold)</p>
+      <form action="{% url 'ninjagold:process_money' %}" method="post">
+        <input type="hidden" name="location" value="house">
+        <input type="submit" value="Find Gold!">
+        {% csrf_token %}
+      </form>
+    </div>
+    <div class="location">
+      <h3>Casino</h3>
+      <p>(earn/takes 0-50 gold)</p>
+      <form action="{% url 'ninjagold:process_money' %}" method="post">
+        <input type="hidden" name="location" value="casino">
+        <input type="submit" value="Find Gold!">
+        {% csrf_token %}
+      </form>
+    </div>
+    <h4>Activities:</h4>
+    <div class="activities">
+      {% for activity in request.session.activities reversed %}
+      <p class={{ activity.class }}>{{ activity.activity}}</p>
+      {% endfor %}
+    </div>
+  </div>
+</body>
+</html>
